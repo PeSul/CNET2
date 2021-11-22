@@ -25,7 +25,12 @@ global::System.Console.WriteLine($"Jsou všechna čísla suda: { isOnlyEvenNumbe
 var result3 = numbers.Select(x => strings[x]);
 PrintList(result3.ToList());
 
-    static void PrintList(List<string> listToPrint)
+// 4 Zjistěte kolik obsahují všechna slova v poli "strings" dohromady písmen - LING
+
+var sumletters = strings.Select(x => x.Length).Sum(x => x);
+global::System.Console.WriteLine($"Všechna slova v poli mají dohromady písmen: { sumletters}");
+
+static void PrintList(List<string> listToPrint)
 {
     foreach (var item in listToPrint)
     {
