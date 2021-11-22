@@ -1,34 +1,60 @@
 ﻿// See https://aka.ms/new-console-template for more information
 
-Console.WriteLine("Hello, World!");
-
+using Playground;
 
 var numbers = new[] { 5, 4, 1, 3, 9, 8, 6, 7, 2, 0 };
 
-var strings = new[] { "zero", "one", "two", "three", "four", "five", "six", "seven", "eight", "nine" };
+var strings = new[] { "zero", "one", "two", "three",
+                        "four", "five", "six", "seven",
+                        "eight", "nine" };
 
-var numInString = strings.Select(x => x.ToUpper());
+// 1 strings - pomocí LINQu vytvořte nové pole kde jsou všechna slova uppercase
+//var result = strings.Select(x => x.ToUpper());
 
-PrintList(numInString.ToList());
+// 2 numbers - zjiste pomoci LINQu jestli pole obsahuje pouze suda cisla
+//bool isOnlyEvenNumbers = numbers.All(x => x % 2 == 0);
+//global::System.Console.WriteLine($"jsou vsechna cisla suda: {isOnlyEvenNumbers}");
 
-//2 numbers zjistěte pomocí LINQ zda pole obsahuje pouze suda cisla
+// 3 - vypište čísla v poli numbers jako slova - LINQ
+// var result = numbers.Select(x => strings[x]);
 
-//var result2 = numbers.Where(x => x % 2 != 0).Count();
+// 4 - zjistěte kolik obsahují všechna
+// slova v poli "strings" dohromady písmen - LINQ
+// var sumletters = strings.Select(x => x.Length).Sum();
+// Console.WriteLine($"vsechna slova v poli strings maji dohromady {sumletters} pismen");
 
-bool isOnlyEvenNumbers = numbers.All(x => x % 2 == 0);
+// 5 - vytvořte novou kolekci obsahující dvojici
+// lowercase i uppercase variantu
+//var result = strings
+//            .Select(slovo => new UpperLowerString(slovo))
+//            .Select(x => $"upper:{x.UpperCase} lower:{x.LowerCase}");
 
-global::System.Console.WriteLine($"Jsou všechna čísla suda: { isOnlyEvenNumbers}");
+// - 5 pomoci tuplu
+// var result = strings.Select(slovo => (slovo.ToLower(), slovo.ToUpper()));
 
-//3 Vypište čísla v poli jako slova -LINQ
+// 6 - LINQ - frekvence vyskytu jednotlivych pismen ve vsech
+// polozkach pole strings (kombinovane - v celem poli)
+
+// agregace - https://docs.microsoft.com/en-us/dotnet/api/system.linq.enumerable.aggregate?view=net-6.0
+//var res = strings.Aggregate(
+//   "", // start with empty string to handle empty list case.
+//   (current, next) => current + next);
+//Console.WriteLine(res);
+
+var aggregated = string.Join("", strings); //spojim slova do jednoho retece
+var result = aggregated // pracuji se stringem jako s kolekci znaku
+    .GroupBy(x => x) // seskupuji podle pismenek (char v koleci string)
+    .Select(g => (g.Key, g.Count())) // udelam tuple obsahujici klic (pismenko) a pocet prvku
+    .OrderBy(x => x.Key)
+    .ThenByDescending(x => x.Item2)
+    ;
 
 
-var result3 = numbers.Select(x => strings[x]);
-PrintList(result3.ToList());
 
-// 4 Zjistěte kolik obsahují všechna slova v poli "strings" dohromady písmen - LING
 
-var sumletters = strings.Select(x => x.Length).Sum(x => x);
-global::System.Console.WriteLine($"Všechna slova v poli mají dohromady písmen: { sumletters}");
+//PrintList(result.ToList());
+
+PrintItems<(char, int)>(result);
 
 static void PrintList(List<string> listToPrint)
 {
@@ -36,5 +62,12 @@ static void PrintList(List<string> listToPrint)
     {
         Console.WriteLine(item);
     }
+}
 
+static void PrintItems<T>(IEnumerable<T> items)
+{
+    foreach (var item in items)
+    {
+        Console.WriteLine(item);
+    }
 }
