@@ -49,12 +49,16 @@ var result = aggregated // pracuji se stringem jako s kolekci znaku
     .ThenByDescending(x => x.Item2)
     ;
 
+// Dictionary
 
 
+var dict = CharFreq("abrakadabra");
+
+Console.WriteLine();
 
 //PrintList(result.ToList());
 
-PrintItems<(char, int)>(result);
+//PrintItems<(char, int)>(result);
 
 static void PrintList(List<string> listToPrint)
 {
@@ -70,4 +74,20 @@ static void PrintItems<T>(IEnumerable<T> items)
     {
         Console.WriteLine(item);
     }
+}
+static Dictionary<char, int> CharFreq(string input)
+{
+    var tuples = input.GroupBy(x => x) // seskupuji podle pismenek (char v koleci string)
+    .Select(g => (Letter: g.Key, Count: g.Count())) // udelam tuple obsahujici klic (pismenko) a pocet prvku
+    .OrderBy(x => x.Count)
+    .ThenByDescending(x => x.Letter);
+
+    Dictionary<char, int> dict = new Dictionary<char, int>();
+
+    foreach (var tuple in tuples)
+    {
+        dict.Add(tuple.Letter, tuple.Count);
+    }
+
+    return dict;
 }
