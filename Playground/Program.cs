@@ -49,12 +49,24 @@ var result = aggregated // pracuji se stringem jako s kolekci znaku
     .ThenByDescending(x => x.Item2)
     ;
 
-// Dictionary
+// Dictionary - https://docs.microsoft.com/en-us/dotnet/api/system.collections.generic.dictionary-2?view=net-6.0
+
+//var dict = CharFreq("abrakadabra");
+
+//Console.WriteLine();
+
+var bookdir = @"C:\Users\pes.PHA\source\repos\PeSul\NET2\Playground\Data";
+
+foreach (var file in TextTools.GetFileFromDir(bookdir))
+{ 
+    var dict = TextTools.GetTopWords(file);
+    var 
+}
+
+var dict = TextTools.FreqAnalysis("alice.txt");
+Console.WriteLine(dict);
 
 
-var dict = CharFreq("abrakadabra");
-
-Console.WriteLine();
 
 //PrintList(result.ToList());
 
