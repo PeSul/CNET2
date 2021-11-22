@@ -2,6 +2,8 @@
 
 using Playground;
 
+Console.WriteLine("Hello, World!");
+
 var numbers = new[] { 5, 4, 1, 3, 9, 8, 6, 7, 2, 0 };
 
 var strings = new[] { "zero", "one", "two", "three",
@@ -38,34 +40,37 @@ var strings = new[] { "zero", "one", "two", "three",
 // agregace - https://docs.microsoft.com/en-us/dotnet/api/system.linq.enumerable.aggregate?view=net-6.0
 //var res = strings.Aggregate(
 //   "", // start with empty string to handle empty list case.
-//   (current, next) => current + next);
+//   (agg, item) => agg + item);
 //Console.WriteLine(res);
 
-var aggregated = string.Join("", strings); //spojim slova do jednoho retece
-var result = aggregated // pracuji se stringem jako s kolekci znaku
-    .GroupBy(x => x) // seskupuji podle pismenek (char v koleci string)
-    .Select(g => (g.Key, g.Count())) // udelam tuple obsahujici klic (pismenko) a pocet prvku
-    .OrderBy(x => x.Key)
-    .ThenByDescending(x => x.Item2)
-    ;
+//var aggregated = string.Join("", strings); //spojim slova do jednoho retece
+//var result = aggregated // pracuji se stringem jako s kolekci znaku
+//    .GroupBy(x => x) // seskupuji podle pismenek (char v koleci string)
+//    .Select(g => (Letter: g.Key,Count: g.Count())) // udelam tuple obsahujici klic (pismenko) a pocet prvku
+//    .OrderBy(x => x.Count)
+//    .ThenByDescending(x => x.Letter)
+//    ; 
 
 // Dictionary - https://docs.microsoft.com/en-us/dotnet/api/system.collections.generic.dictionary-2?view=net-6.0
 
-//var dict = CharFreq("abrakadabra");
-
-//Console.WriteLine();
-
 var bookdir = @"C:\Users\pes.PHA\source\repos\PeSul\NET2\Playground\Data";
 
-foreach (var file in TextTools.GetFileFromDir(bookdir))
-{ 
-    var dict = TextTools.GetTopWords(file);
-    var 
+foreach (var file in GetFilesFromDir(bookdir))
+{
+    var dict = TextTools.TextTools.FreqAnalysis(file);
+    var top10 = TextTools.TextTools.GetTopWords(10, dict);
+
+    var fi = new FileInfo(file);
+
+    Console.WriteLine("KNIHA: " + fi.Name);
+    PrintList(top10.Select(x => $"{x.Key} : {x.Value}").ToList());
+    Console.WriteLine();
 }
 
-var dict = TextTools.FreqAnalysis("alice.txt");
-Console.WriteLine(dict);
 
+
+
+Console.WriteLine();
 
 
 //PrintList(result.ToList());
@@ -87,6 +92,7 @@ static void PrintItems<T>(IEnumerable<T> items)
         Console.WriteLine(item);
     }
 }
+
 static Dictionary<char, int> CharFreq(string input)
 {
     var tuples = input.GroupBy(x => x) // seskupuji podle pismenek (char v koleci string)
@@ -102,4 +108,9 @@ static Dictionary<char, int> CharFreq(string input)
     }
 
     return dict;
+}
+
+static IEnumerable<string> GetFilesFromDir(string dir)
+{
+    return Directory.EnumerateFiles(dir);
 }

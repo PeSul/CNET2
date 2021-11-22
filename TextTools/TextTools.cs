@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Playground
+namespace TextTools
 {
-    internal class TextTools
+    public class TextTools
     {
         public static Dictionary<string, int> FreqAnalysis(string file)
         {
@@ -19,6 +19,7 @@ namespace Playground
             {
                 if (string.IsNullOrWhiteSpace(word))
                     continue;
+
                 if (dict.ContainsKey(word))
                 {
                     dict[word] = dict[word] + 1;
@@ -30,17 +31,14 @@ namespace Playground
             }
 
             return dict;
-
         }
-        public static Dictionary<string, int> GetTopWords(int takeTop, Dictionary<string, int> dict = new())
-        {
-            return dict;
-        }
-    
 
-        public static IEnumerable<string> GetFilesFromDir(string dir)
+        public static Dictionary<string, int> GetTopWords(int takeTop, Dictionary<string, int> dict)
         {
-            return Directory.GetFiles(bookdir);
+            return dict
+                .OrderByDescending(x => x.Value).Take(takeTop)
+                .ToDictionary(x => x.Key, y => y.Value);
+            ;
         }
     }
 }
