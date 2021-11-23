@@ -8,10 +8,15 @@ namespace TextTools
 {
     public class TextTools
     {
-        public static Dictionary<string, int> FreqAnalysis(string file)
+        public static async Task<Dictionary<string, int>> FreqAnalysisFromFileAsync(string file, string splitby = " ")
         {
-            var content = File.ReadAllText(file);
-            var words = content.Split(' ');
+            var content = await File.ReadAllTextAsync(file);
+            return FreqAnalysisFromString(content, splitby);
+        }
+
+        public static Dictionary<string, int> FreqAnalysisFromString(string content, string splitby = " ")
+        {
+            var words = content.Split(splitby);
 
             Dictionary<string, int> dict = new();
 
@@ -31,6 +36,12 @@ namespace TextTools
             }
 
             return dict;
+        }
+
+        public static Dictionary<string, int> FreqAnalysisFromFile(string file, string splitby = " ")
+        {
+            var content = File.ReadAllText(file);
+            return FreqAnalysisFromString(content);
         }
 
         public static Dictionary<string, int> GetTopWords(int takeTop, Dictionary<string, int> dict)

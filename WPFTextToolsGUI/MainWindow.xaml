@@ -8,6 +8,38 @@
         Loaded="Window_Loaded"
         Title="MainWindow" Height="450" Width="800">
     <Grid>
-        <TextBlock x:Name="txbInfo" FontSize="20" />
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
+
+        <Grid.RowDefinitions>
+            <RowDefinition Height="60"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <ScrollViewer Margin="0,0,0,0" Grid.Row="1" Grid.Column="0">
+            <TextBlock x:Name="txbInfo" FontSize="20" Margin="10,10,10,0" />
+        </ScrollViewer>
+
+        <ScrollViewer Margin="0,0,0,0" Grid.Row="1" Grid.Column="1">
+            <TextBlock x:Name="txbDebugInfo" FontSize="20" Margin="10,10,10,0" />
+        </ScrollViewer>
+
+        <Button Grid.Row="0"  x:Name="btnLoad"
+                Content="Read Async"
+                Click="btnLoad_Click"
+                Margin="10,10,269,10"/>
+
+        <Button Grid.Column="1"
+                Content="await"
+                HorizontalAlignment="Stretch"
+                Margin="10,10,10,10" Click="btnAwaitDemo_Click"/>
+        
+        <Button Content="Stat all"
+                Click="btnStatAll_Click"
+                HorizontalAlignment="Left"
+                Margin="145,0,0,0"
+                VerticalAlignment="Center" Height="40" Width="94"/>
     </Grid>
 </Window>
