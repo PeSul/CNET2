@@ -57,7 +57,7 @@ var bookdir = @"C:\Users\pes.PHA\source\repos\PeSul\NET2\Playground\Data";
 
 foreach (var file in GetFilesFromDir(bookdir))
 {
-    var dict = TextTools.TextTools.FreqAnalysis(file);
+    var dict = TextTools.TextTools.FreqAnalysisFromFile(file);
     var top10 = TextTools.TextTools.GetTopWords(10, dict);
 
     var fi = new FileInfo(file);

@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:WPFTextGUI"
         mc:Ignorable="d"
         Loaded="Window_Loaded"
-        Title="MainWindow" Height="450" Width="800">
+        Title="MainWindow" Height="1000" Width="800">
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition/>
@@ -29,17 +29,35 @@
         <Button Grid.Row="0"  x:Name="btnLoad"
                 Content="Read Async"
                 Click="btnLoad_Click"
-                Margin="10,10,269,10"/>
+                Margin="10,5,269,0" Height="30" VerticalAlignment="Top"/>
+
+        <Button Content="Stat all"
+                Click="btnStatAll_Click"
+                HorizontalAlignment="Center"
+                Margin="0,5,0,0"
+                VerticalAlignment="Top" Height="30" Width="94"/>
+
+        <Button Content="Stats All (P-L)"
+                 Click="btnStatsAllParallelLock_Click"
+                HorizontalAlignment="Left"
+                Margin="10,5,0,0"
+                VerticalAlignment="Top" Height="30" Width="94" Grid.Column="1"/>
+
+        <Button Name="btnStatsAllParralel"
+                Content="Stats All (P)"
+                Height="30" Width="94"
+                HorizontalAlignment="Left"
+                Margin="288,5,0,0"
+                VerticalAlignment="Top" Click="btnStatsAllParralel_Click"/>
 
         <Button Grid.Column="1"
                 Content="await"
-                HorizontalAlignment="Stretch"
-                Margin="10,10,10,10" Click="btnAwaitDemo_Click"/>
-        
-        <Button Content="Stat all"
-                Click="btnStatAll_Click"
-                HorizontalAlignment="Left"
-                Margin="145,0,0,0"
-                VerticalAlignment="Center" Height="40" Width="94"/>
+                Margin="264,5,10,0"
+                Click="btnAwaitDemo_Click"
+                Height="30" VerticalAlignment="Top"/>
+
+
+        <ProgressBar x:Name="progress1" Grid.ColumnSpan="2" HorizontalAlignment="Stretch" Height="10" Margin="10,0,10,5" VerticalAlignment="Bottom" Width="800"/>
+
     </Grid>
 </Window>

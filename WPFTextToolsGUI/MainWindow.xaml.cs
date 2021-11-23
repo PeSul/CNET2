@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
@@ -14,6 +15,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using WPFTextGUI.Model;
 
 namespace WPFTextGUI
 {
@@ -65,7 +67,7 @@ namespace WPFTextGUI
             txbInfo.Text = txbDebugInfo.Text = "";
             Stopwatch stopwatch = new();
             stopwatch.Start();
-            
+
             var files = GetBigFiles();
 
             //var bigfilesdir = @"c:\Users\pes.PHA\source\repos\PeSul\NET2\Playground\BigFiles";
@@ -90,18 +92,16 @@ namespace WPFTextGUI
                 txbInfo.Text += Environment.NewLine;
                 txbDebugInfo.Text += $"mezičas ms: {stopwatch.ElapsedMilliseconds} {Environment.NewLine}";
 
+                Data.Data.Results.Add(new StatsResult() { Source = file, Top10Words = top10 });
+
+                progress1.Value += 100.0 / files.Count();
+
             }
 
             stopwatch.Stop();
             txbDebugInfo.Text += "celkový čas ms:" + stopwatch.ElapsedMilliseconds;
-
             Mouse.OverrideCursor = null;
 
-            //var content = File.ReadAllText(file);
-
-            //txbInfo.Text = "Načteno";
-
-            //var xx = content.Split(Environment.NewLine).Count();
         }
 
         private async void btnAwaitDemo_Click(object sender, RoutedEventArgs e)
@@ -116,12 +116,12 @@ namespace WPFTextGUI
 
         private void btnStatAll_Click(object sender, RoutedEventArgs e)
         {
-            Mouse.OverrideCursor = Cursors.Wait;
 
             txbInfo.Text = txbDebugInfo.Text = "";
+            Mouse.OverrideCursor = Cursors.Wait;
             Stopwatch stopwatch = new();
             stopwatch.Start();
-            
+
 
             var files = GetBigFiles();
 
@@ -141,7 +141,71 @@ namespace WPFTextGUI
             txbDebugInfo.Text += "celkový čas ms:" + stopwatch.ElapsedMilliseconds;
             Mouse.OverrideCursor = null;
 
-            //txbDebugInfo.Text = "ok";
+
+        }
+
+        private void btnStatsAllParralel_Click(object sender, RoutedEventArgs e)
+        {
+            
+            txbInfo.Text = txbDebugInfo.Text = "";
+            Mouse.OverrideCursor = Cursors.Wait;
+            Stopwatch stopwatch = new();
+            stopwatch.Start();
+
+            ConcurrentDictionary<string, int> dict = new();
+
+            var files = GetBigFiles();
+
+            Parallel.ForEach(files, file =>
+                {
+                    foreach(var word in File.ReadAllLines(file))
+                    {
+                        dict.AddOrUpdate(word, 1, (key, oldValue) => oldValue + 1);
+                    }
+                });
+
+
+            stopwatch.Stop();
+            txbDebugInfo.Text += "celkový čas ms:" + stopwatch.ElapsedMilliseconds;
+            Mouse.OverrideCursor = null;
+        }
+
+        private void btnStatsAllParallelLock_Click(object sender, RoutedEventArgs e)
+        {
+
+            txbInfo.Text = txbDebugInfo.Text = "";
+            Mouse.OverrideCursor = Cursors.Wait;
+            Stopwatch stopwatch = new();
+            stopwatch.Start();
+
+            object locker = new object();
+            Dictionary<string, int> dict = new();
+
+            var files = GetBigFiles();
+
+            Parallel.ForEach(files, file =>
+            {
+                foreach (var word in File.ReadAllLines(file))
+                {
+                    lock (locker)
+                    {
+                        if (dict.ContainsKey(word))
+                            dict[word]++;
+                        else
+                            dict.Add(word, 1);
+                    }
+                }
+            });
+
+            foreach (var kv in dict.OrderByDescending(x => x.Value).Take(10))
+            {
+                txbInfo.Text += $"{kv.Key}: {kv.Value} {Environment.NewLine}";
+            }
+
+            stopwatch.Stop();
+            txbDebugInfo.Text += "celkový čas ms:" + stopwatch.ElapsedMilliseconds;
+            Mouse.OverrideCursor = null;
+
         }
     }
 }
