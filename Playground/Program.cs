@@ -3,7 +3,7 @@
 using Playground;
 
 Console.WriteLine("Hello, World!");
-
+/*
 var task1 = Task.Run(() =>
 {
     TextTools.TextTools.FreqAnalysisFromFile(@"c:\Users\pes.PHA\source\repos\PeSul\NET2\Playground\BigFiles\words01.txt", Environment.NewLine);
@@ -20,6 +20,16 @@ Task.WaitAny(task1, task2);
 
 Console.WriteLine("Program finished.");
 Console.ReadLine();
+*/
+
+HttpClient httpClient = new HttpClient();
+
+var res = await httpClient.GetAsync("https://google.com");
+
+if (res.IsSuccessStatusCode)
+{ 
+    string content = await res.Content.ReadAsStringAsync();
+}
 
 /*
 var numbers = new[] { 5, 4, 1, 3, 9, 8, 6, 7, 2, 0 };
