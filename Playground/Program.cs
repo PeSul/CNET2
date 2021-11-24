@@ -4,6 +4,24 @@ using Playground;
 
 Console.WriteLine("Hello, World!");
 
+var task1 = Task.Run(() =>
+{
+    TextTools.TextTools.FreqAnalysisFromFile(@"c:\Users\pes.PHA\source\repos\PeSul\NET2\Playground\BigFiles\words01.txt", Environment.NewLine);
+        Console.WriteLine("Task 1 finished");
+});
+
+var task2 = Task.Run(() =>
+{
+TextTools.TextTools.FreqAnalysisFromFile(@"c:\Users\pes.PHA\source\repos\PeSul\NET2\Playground\BigFiles\words02.txt", Environment.NewLine);
+         Console.WriteLine("Task 2 finished");
+});
+
+Task.WaitAny(task1, task2);
+
+Console.WriteLine("Program finished.");
+Console.ReadLine();
+
+/*
 var numbers = new[] { 5, 4, 1, 3, 9, 8, 6, 7, 2, 0 };
 
 var strings = new[] { "zero", "one", "two", "three",
@@ -113,4 +131,7 @@ static Dictionary<char, int> CharFreq(string input)
 static IEnumerable<string> GetFilesFromDir(string dir)
 {
     return Directory.EnumerateFiles(dir);
+
+
 }
+*/

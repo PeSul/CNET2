@@ -7,6 +7,9 @@ using WPFTextGUI.Model;
 
 namespace WPFTextGUI.Data
 {
+    /// <summary>
+    /// Data
+    /// </summary>
     public class Data
     {
         public static List<StatsResult> Results { get; set; } = new List<StatsResult>();
