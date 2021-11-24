@@ -9,6 +9,7 @@ namespace WPFTextGUI.Data
 {
     /// <summary>
     /// Data
+    /// 
     /// </summary>
     public class Data
     {

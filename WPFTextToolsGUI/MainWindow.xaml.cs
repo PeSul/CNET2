@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
+using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -16,6 +17,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using WPFTextGUI.Model;
+using WPFTextGUI.Views;
 
 namespace WPFTextGUI
 {
@@ -206,6 +208,12 @@ namespace WPFTextGUI
             txbDebugInfo.Text += "celkový čas ms:" + stopwatch.ElapsedMilliseconds;
             Mouse.OverrideCursor = null;
 
+        }
+
+        private void btnShowAnalysisDetail_Click(object sender, RoutedEventArgs e)
+        {
+            StatsResultWindow rw = new StatsResultWindow();
+            rw.Show();
         }
     }
 }

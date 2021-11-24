@@ -26,38 +26,70 @@
             <TextBlock x:Name="txbDebugInfo" FontSize="20" Margin="10,10,10,0" />
         </ScrollViewer>
 
-        <Button Grid.Row="0"  x:Name="btnLoad"
+        <StackPanel  Orientation="Vertical" Grid.ColumnSpan="2" Grid.Row="0">
+            <WrapPanel Grid.Row="0" Grid.ColumnSpan="2" Orientation="Horizontal"  >
+
+                <Button x:Name="btnLoad"
                 Content="Read Async"
                 Click="btnLoad_Click"
-                Margin="10,5,269,0" Height="30" VerticalAlignment="Top"/>
+                Grid.Row="0"  
+                Padding="5"
+                Margin="5"
+                FontSize="16"
+                />
 
-        <Button Content="Stat all"
+                <Button x:Name="btnStatAll"
+                Content="Stat all"
                 Click="btnStatAll_Click"
+                Grid.Row="0"        
+                Padding="5"
                 HorizontalAlignment="Center"
-                Margin="0,5,0,0"
-                VerticalAlignment="Top" Height="30" Width="94"/>
+                Margin="5"
+                FontSize="16"
+                />
 
-        <Button Content="Stats All (P-L)"
-                 Click="btnStatsAllParallelLock_Click"
-                HorizontalAlignment="Left"
-                Margin="10,5,0,0"
-                VerticalAlignment="Top" Height="30" Width="94" Grid.Column="1"/>
+                <Button x:Name="btnStatsAllParallelLock"
+                Content="Stats All (P-L)"
+                Click="btnStatsAllParallelLock_Click"
+                Grid.Row="0"
+                Padding="5"
+                Margin="5"
+                FontSize="16"
+                />
 
-        <Button Name="btnStatsAllParralel"
+                <Button x:Name="btnStatsAllParralel"
                 Content="Stats All (P)"
-                Height="30" Width="94"
-                HorizontalAlignment="Left"
-                Margin="288,5,0,0"
-                VerticalAlignment="Top" Click="btnStatsAllParralel_Click"/>
+                Click="btnStatsAllParralel_Click"
+                Grid.Row="0"        
+                Padding="5"
+                Margin="5"
+                FontSize="16"
+                />
 
-        <Button Grid.Column="1"
-                Content="await"
-                Margin="264,5,10,0"
+                <Button x:Name="btnAwaitDemo"
+                Content="Await"
                 Click="btnAwaitDemo_Click"
-                Height="30" VerticalAlignment="Top"/>
+                Grid.Row="0"        
+                Padding="5"
+                Margin="5"
+                FontSize="16"
+                />
+
+                <Button x:Name="btnShowAnalysisDetail"
+                Content="Show Analysis"
+                Click="btnShowAnalysisDetail_Click"
+                Grid.Row="0"        
+                Padding="5"
+                Margin="5"
+                FontSize="16"
+                 />
 
 
-        <ProgressBar x:Name="progress1" Grid.ColumnSpan="2" HorizontalAlignment="Stretch" Height="10" Margin="10,0,10,5" VerticalAlignment="Bottom" Width="800"/>
+            </WrapPanel>
+
+            <ProgressBar x:Name="progress1" Grid.ColumnSpan="2" HorizontalAlignment="Stretch" Height="10" Margin="10,0,10,5" VerticalAlignment="Bottom" Width="800"/>
+
+        </StackPanel>
 
     </Grid>
 </Window>

@@ -16,6 +16,9 @@ namespace WPFTextGUI.Model
         /// </summary>
         public string Source { get; set; }
 
+     
+
+
         /// <summary>
         /// 10 most commonn words in source
         /// </summary>
